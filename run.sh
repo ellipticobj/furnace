@@ -34,21 +34,7 @@ echo "Starting system setup..."
 
 # Update the system first
 echo "Updating system..."
-sudo pacman -Syu --noconfirm
-
-# Install yay AUR helper if not present
-if ! command -v yay &> /dev/null; then
-  echo "Installing yay AUR helper..."
-  sudo pacman -S --needed git base-devel --noconfirm
-  git clone https://aur.archlinux.org/yay.git
-  cd yay
-  echo "building yay.... yaaaaayyyyy"
-  makepkg -si --noconfirm
-  cd ..
-  rm -rf yay
-else
-  echo "yay is already installed"
-fi
+sudo dnf upgrade -y
 
 # Install packages by category
 echo "Installing system utilities..."
@@ -83,16 +69,8 @@ for service in "${SERVICES[@]}"; do
   fi
 done
 
-# Install gnome specific things to make it like a tiling WM
-echo "Installing Gnome extensions..."
-. gnome/gnome-extensions.sh
-echo "Setting Gnome hotkeys..."
-. gnome/gnome-hotkeys.sh
-echo "Configuring Gnome..."
-. gnome/gnome-settings.sh
-
 # Some programs just run better as flatpaks. Like discord/spotify
-echo "Installing flatpaks (like discord and spotify)"
+echo "Installing flatpaks"
 . install-flatpaks.sh
 
 echo "Setup complete! You may want to reboot your system."

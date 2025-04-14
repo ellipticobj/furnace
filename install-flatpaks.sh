@@ -1,14 +1,12 @@
 FLATPAKS=(
-  "spotify"
-  "discord"
-  "chrome"
+  "app.zen_browser.zen"
 )
 
 for pak in "${FLATPAKS[@]}"; do
   if ! flatpak list | grep -i "$pak" &> /dev/null; then
-    echo "Installing Flatpak: $pak"
+    echo "installing flatpak: $pak"
     flatpak install --noninteractive "$pak"
   else
-    echo "Flatpak already installed: $pak"
+    echo "flatpak already installed: $pak"
   fi
 done

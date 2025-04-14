@@ -1,16 +1,16 @@
 #!/bin/bash
 
 ORIGINAL_DIR=$(pwd)
-REPO_URL="https://github.com/typecraft-dev/dotfiles"
+REPO_URL="https://github.com/ellipticobj/dotfiles.git"
 REPO_NAME="dotfiles"
 
 
 is_stow_installed() {
-  pacman -Qi "stow" &> /dev/null
+  command -v stow 2>&1 >/dev/null
 }
 
 if ! is_stow_installed; then
-  echo "Install stow first"
+  echo "stow is not installed"
   exit 1
 fi
 
@@ -18,19 +18,18 @@ cd ~
 
 # Check if the repository already exists
 if [ -d "$REPO_NAME" ]; then
-  echo "Repository '$REPO_NAME' already exists. Skipping clone"
-else
-  git clone "$REPO_URL"
+  echo "repository'$REPO_NAME' already exists. backing up and cloning"
+  mv $REPO_NAME{,.bak}
 fi
 
-# Check if the clone was successful
+git clone "$REPO_URL"
+
+# check if the clone was successful
 if [ $? -eq 0 ]; then
   cd "$REPO_NAME"
-  stow zsh
-  stow ghostty
-  stow nvim
+  stow -vt ~ * --adopt 
 else
-  echo "Failed to clone the repository."
+  echo "failed to clone the repository."
   exit 1
 fi
 
