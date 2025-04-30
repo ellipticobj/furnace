@@ -30,7 +30,7 @@ FONTS_BASE_DIR="$HOME/.local/share/fonts"
 
 # declare associative array for fonts (name -> url)
 declare -A FONTS=(
-  ["Cartograph CF"]="https://github.com/g5becks/Cartograph/archive/refs/heads/main.zip"
+  ["CartographCF"]="https://github.com/g5becks/Cartograph/archive/refs/heads/main.zip"
 )
 
 #------------------------------------------------------------------------------
