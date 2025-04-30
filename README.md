@@ -1,46 +1,75 @@
-# Typecraft's Crucible 🛠️
+# Furnace 🛠️
 
-An Arch Linux System Tool that automates the setup and configuration of an Arch Linux system with Gnome. It installs and configures packages, desktop environments, and various utilities to create a fully functional development environment.
+A Fedora System Tool that automates the setup and configuration of a Fedora system. It can export your currently installed packages and install them on another system, or install packages from a predefined list.
 
 ## Features
 
 - 🔄 Automated system updates
-- 📦 Package installation by categories:
-  - System utilities
-  - Development tools
-  - System maintenance tools
-  - Desktop environment
-  - Office applications
-  - Media packages
-  - Fonts
-- 🛠️ Automatic installation of yay AUR helper
-- 🖥️ GNOME desktop environment setup with tiling-like features
+- 📦 Simple package installation from a single list
+- 📋 Export currently installed packages to a file
+- 📥 Install packages from an exported list
 - 🎮 Flatpak integration for specific applications
+- 🔤 Custom font installation
 - ⚙️ Automatic service configuration
-- 🔧 GNOME extensions and hotkey configuration
 
 ## Prerequisites
 
-- A fresh Arch Linux installation
+- Fedora Linux
 - Internet connection
 - sudo privileges
 
-## Installation
+## Usage
 
-1. Clone this repository:
-
-```bash
-git clone https://github.com/typecraft-dev/crucible.git
-```
-
-2. Run the setup script:
+### All-in-one installation
 
 ```bash
-./run.sh
+./install.sh
 ```
 
-3. Follow the prompts to select the packages you want to install.
+This will install everything: packages from packages.conf, flatpaks, and fonts.
 
-4. The script will handle the rest of the setup process.
+### Install specific components
 
-5. After the setup is complete, you can reboot your system to see the changes.
+```bash
+./install.sh --packages    # Install only packages from packages.conf
+./install.sh --flatpaks    # Install only flatpaks
+./install.sh --fonts       # Install only fonts
+```
+
+You can combine options:
+
+```bash
+./install.sh --packages --flatpaks    # Install packages and flatpaks, but not fonts
+```
+
+### Export your currently installed packages
+
+```bash
+./install.sh --export
+```
+
+This will create two files:
+- `fedora-packages-rpm.txt`: A simple list of all your currently installed packages
+- `packages-exported.conf`: A configuration file in the same format as `packages.conf` that can be used directly with the installation script
+
+### Install packages from an export file
+
+```bash
+./install.sh --download [FILENAME]
+```
+
+If you don't specify a filename, it will use `fedora-packages-rpm.txt` by default.
+
+### Export and install in one step
+
+```bash
+./install.sh --current
+```
+
+This will export your currently installed packages and then install them, which is useful for setting up a new system with the same packages.
+
+### See all available options
+
+```bash
+./install.sh --help
+```
